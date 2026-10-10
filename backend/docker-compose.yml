@@ -1,0 +1,22 @@
+services:
+  api:
+    build: .
+    container_name: nova-api
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:7
+    container_name: nova-mongo
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
